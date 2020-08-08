@@ -22,16 +22,16 @@ public class BusinessLogic {
     public static List<EmployeeTM> getAllEmployees() {
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
         ArrayList<EmployeeTM> employees = new ArrayList<>();
-        for (Employee employee : employeeDAO.getAllEmployees()) {
-            employees.add(new EmployeeTM(employee.getEmpId(),
-                    employee.getEmpName(),
-                    employee.getEmpAddress(),
-                    employee.getEmail(),
-                    employee.getContactNo(),
-                    employee.getDateOfBirth().toLocalDate(),
-                    employee.getJoinedDate().toLocalDate(),
-                    employee.getSalary(),
-                    employee.getGender()
+        for (Object employee : employeeDAO.getAll()) {
+            employees.add(new EmployeeTM(((Employee)employee).getEmpId(),
+                    ((Employee)employee).getEmpName(),
+                    ((Employee)employee).getEmpAddress(),
+                    ((Employee)employee).getEmail(),
+                    ((Employee)employee).getContactNo(),
+                    ((Employee)employee).getDateOfBirth().toLocalDate(),
+                    ((Employee)employee).getJoinedDate().toLocalDate(),
+                    ((Employee)employee).getSalary(),
+                    ((Employee)employee).getGender()
             ));
 
         }
@@ -45,16 +45,16 @@ public class BusinessLogic {
     public static EmployeeTM getEmployee(String employeeId) {
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
-        Employee employee = employeeDAO.getEmployee(employeeId);
-        return new EmployeeTM(employee.getEmpId(),
-                employee.getEmpName(),
-                employee.getEmpAddress(),
-                employee.getEmail(),
-                employee.getContactNo(),
-                employee.getDateOfBirth().toLocalDate(),
-                employee.getJoinedDate().toLocalDate(),
-                employee.getSalary(),
-                employee.getGender());
+        Object employee = employeeDAO.get(employeeId);
+        return new EmployeeTM(((Employee)employee).getEmpId(),
+                ((Employee)employee).getEmpName(),
+                ((Employee)employee).getEmpAddress(),
+                ((Employee)employee).getEmail(),
+                ((Employee)employee).getContactNo(),
+                ((Employee)employee).getDateOfBirth().toLocalDate(),
+                ((Employee)employee).getJoinedDate().toLocalDate(),
+                ((Employee)employee).getSalary(),
+                ((Employee)employee).getGender());
     }
 
     public static boolean saveEmployee(EmployeeTM employeeTM) {
@@ -72,7 +72,7 @@ public class BusinessLogic {
                 employeeTM.getSalary(),
                 employeeTM.getGender()
         );
-        return employeeDAO.saveEmployee(employee);
+        return employeeDAO.save(employee);
 
 
     }
@@ -80,7 +80,7 @@ public class BusinessLogic {
     public static boolean deleteEmployee(String employeeId) {
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
-        return employeeDAO.deleteEmployee(employeeId);
+        return employeeDAO.delete(employeeId);
     }
 
     public static boolean updateEmployee(EmployeeTM employeeTM) {
@@ -99,7 +99,7 @@ public class BusinessLogic {
                 employeeTM.getGender()
         );
 
-        return employeeDAO.updateEmployee(employee);
+        return employeeDAO.update(employee);
     }
     //==============================================================================================
 
@@ -107,13 +107,13 @@ public class BusinessLogic {
         AgentDAO agentDAO = new AgentDAOImpl();
 
         ArrayList<AgentTM> agents = new ArrayList<>();
-        for (Agent agent : agentDAO.getAllAgents()) {
-            agents.add(new AgentTM(agent.getAgentId(),
-                    agent.getName(),
-                    agent.getPhoneNo(),
-                    agent.getEntryDate().toLocalDate(),
-                    agent.getEmail(),
-                    agent.getCompanyId()
+        for (Object agent : agentDAO.getAll()) {
+            agents.add(new AgentTM(((Agent)agent).getAgentId(),
+                    ((Agent)agent).getName(),
+                    ((Agent)agent).getPhoneNo(),
+                    ((Agent)agent).getEntryDate().toLocalDate(),
+                    ((Agent)agent).getEmail(),
+                    ((Agent)agent).getCompanyId()
 
             ));
 
@@ -126,13 +126,13 @@ public class BusinessLogic {
     public static AgentTM getEAgent(String agentId) {
         AgentDAO agentDAO = new AgentDAOImpl();
 
-        Agent agent = agentDAO.getAgent(agentId);
-        return new AgentTM(agent.getAgentId(),
-                agent.getName(),
-                agent.getPhoneNo(),
-                agent.getEntryDate().toLocalDate(),
-                agent.getEmail(),
-                agent.getCompanyId());
+        Object agent = agentDAO.get(agentId);
+        return new AgentTM(((Agent)agent).getAgentId(),
+                ((Agent)agent).getName(),
+                ((Agent)agent).getPhoneNo(),
+                ((Agent)agent).getEntryDate().toLocalDate(),
+                ((Agent)agent).getEmail(),
+                ((Agent)agent).getCompanyId());
     }
 
     public static boolean saveAgent(AgentTM agentTM) {
@@ -147,13 +147,13 @@ public class BusinessLogic {
                 agentTM.getName()
         );
 
-        return agentDAO.saveAgent(agent);
+        return agentDAO.save(agent);
 
     }
 
     public static boolean deleteAgent(String agentId) {
         AgentDAO agentDAO = new AgentDAOImpl();
-        return agentDAO.deleteAgent(agentId);
+        return agentDAO.delete(agentId);
 
     }
 
@@ -172,7 +172,7 @@ public class BusinessLogic {
 
         );
 
-        return agentDAO.updateAgent(agent);
+        return agentDAO.update(agent);
 
     }
 
@@ -182,12 +182,12 @@ public class BusinessLogic {
     public static List<CompanyTM> getAllCompanies() {
         CompanyDAO companyDAO = new CompanyDAOImpl();
         ArrayList<CompanyTM> companies = new ArrayList<>();
-        for (Company company :companyDAO.getAllCompanies()) {
-            companies.add(new CompanyTM(company.getCompanyId(),
-                    company.getCompanyName(),
-                    company.getEntryDate().toLocalDate(),
-                    company.getCompanyPhoneNo(),
-                    company.getCompanyEmail()
+        for (Object company :companyDAO.getAll()) {
+            companies.add(new CompanyTM(((Company)company).getCompanyId(),
+                    ((Company)company).getCompanyName(),
+                    ((Company)company).getEntryDate().toLocalDate(),
+                    ((Company)company).getCompanyPhoneNo(),
+                    ((Company)company).getCompanyEmail()
             ));
         }
         return companies;
@@ -196,12 +196,12 @@ public class BusinessLogic {
     public static CompanyTM getCompany(String companyId) {
         CompanyDAO companyDAO = new CompanyDAOImpl();
 
-        Company company = companyDAO.getCompany(companyId);
-        return new CompanyTM(company.getCompanyId(),
-                company.getCompanyName(),
-                company.getEntryDate().toLocalDate(),
-                company.getCompanyPhoneNo(),
-                company.getCompanyEmail());
+        Object company = companyDAO.get(companyId);
+        return new CompanyTM(((Company)company).getCompanyId(),
+                ((Company)company).getCompanyName(),
+                ((Company)company).getEntryDate().toLocalDate(),
+                ((Company)company).getCompanyPhoneNo(),
+                ((Company)company).getCompanyEmail());
     }
 
 
@@ -217,13 +217,13 @@ public class BusinessLogic {
 
         );
 
-        return companyDAO.saveCompany(company);
+        return companyDAO.save(company);
     }
 
     public static boolean deleteCompany(String companyId) {
         CompanyDAO companyDAO = new CompanyDAOImpl();
 
-        return companyDAO.deleteCompany(companyId);
+        return companyDAO.delete(companyId);
     }
 
     public static boolean updateCompany(CompanyTM companyTM) {
@@ -241,7 +241,7 @@ public class BusinessLogic {
 
         );
 
-        return companyDAO.updateCompany(company);
+        return companyDAO.update(company);
     }
 
     //==============================================================================================
@@ -260,7 +260,7 @@ public class BusinessLogic {
                     order.getEmpId(),
                     entryDate
             );
-            boolean savedOrder = orderDAO.saveOrder(order1);
+            boolean savedOrder = orderDAO.save(order1);
             if (savedOrder == false) {
                 connection.rollback();
                 return false;
@@ -274,16 +274,16 @@ public class BusinessLogic {
                         orderDetail.getQty(),
                         orderDetail.getUnitPrice()
                 );
-                boolean savedOrderDetail = orderDetailDAO.saveOrderDetail(orderDetail1);
+                boolean savedOrderDetail = orderDetailDAO.save(orderDetail1);
                 if (savedOrderDetail == false) {
                     connection.rollback();
                     return false;
                 }
 
 
-                Item item = itemDAO.getItem(orderDetail.getItemCode());
-                item.setQtyOnHand(item.getQtyOnHand().subtract(orderDetail.getQty()));
-                boolean updatedQty = itemDAO.updateItem(item);
+                Object item = itemDAO.get(orderDetail.getItemCode());
+                ((Item)item).setQtyOnHand(((Item)item).getQtyOnHand().subtract(orderDetail.getQty()));
+                boolean updatedQty = itemDAO.update(item);
                 if (updatedQty==false) {
                     connection.rollback();
                     return false;
@@ -316,19 +316,19 @@ public class BusinessLogic {
     public static List<ItemTM> getAllItems() {
         ItemDAO itemDAO = new ItemDAOImpl();
         ArrayList<ItemTM> items = new ArrayList<>();
-        for (Item item : itemDAO.getAllItems()) {
+        for (Object item : itemDAO.getAll()) {
             items.add(new ItemTM(
-                    item.getItemCode(),
-                    item.getDescription(),
-                    item.getCategory(),
-                    item.getManufacturer(),
-                    item.getProductionDate().toLocalDate(),
-                    item.getExpiryDate().toLocalDate(),
-                    item.getBuyingPrice(),
-                    item.getSellingPrice(),
-                    item.getMinimumStockLevel(),
-                    item.getQtyOnHand(),
-                    item.getUnitPrice()
+                    ((Item)item).getItemCode(),
+                    ((Item)item).getDescription(),
+                    ((Item)item).getCategory(),
+                    ((Item)item).getManufacturer(),
+                    ((Item)item).getProductionDate().toLocalDate(),
+                    ((Item)item).getExpiryDate().toLocalDate(),
+                    ((Item)item).getBuyingPrice(),
+                    ((Item)item).getSellingPrice(),
+                    ((Item)item).getMinimumStockLevel(),
+                    ((Item)item).getQtyOnHand(),
+                    ((Item)item).getUnitPrice()
             ));
 
         }
@@ -339,19 +339,19 @@ public class BusinessLogic {
 
     public static ItemTM getItem(String itemCode) {
         ItemDAO itemDAO = new ItemDAOImpl();
-        Item item = itemDAO.getItem(itemCode);
+        Object item = itemDAO.get(itemCode);
         return new ItemTM(
-                item.getItemCode(),
-                item.getDescription(),
-                item.getCategory(),
-                item.getManufacturer(),
-                item.getProductionDate().toLocalDate(),
-                item.getExpiryDate().toLocalDate(),
-                item.getBuyingPrice(),
-                item.getSellingPrice(),
-                item.getMinimumStockLevel(),
-                item.getQtyOnHand(),
-                item.getUnitPrice());
+                ((Item)item).getItemCode(),
+                ((Item)item).getDescription(),
+                ((Item)item).getCategory(),
+                ((Item)item).getManufacturer(),
+                ((Item)item).getProductionDate().toLocalDate(),
+                ((Item)item).getExpiryDate().toLocalDate(),
+                ((Item)item).getBuyingPrice(),
+                ((Item)item).getSellingPrice(),
+                ((Item)item).getMinimumStockLevel(),
+                ((Item)item).getQtyOnHand(),
+                ((Item)item).getUnitPrice());
 
 
     }
@@ -364,8 +364,8 @@ public class BusinessLogic {
         int affectedRows = 0;
         try {
             connection.setAutoCommit(false);
-            Item item = itemDAO.getItem(companyItemPK.getItemCode());
-            boolean saveItem = itemDAO.saveItem(item);
+            Object item = itemDAO.get(companyItemPK.getItemCode());
+            boolean saveItem = itemDAO.save(item);
             if (saveItem==false) {
                 try {
                     connection.rollback();
@@ -378,7 +378,7 @@ public class BusinessLogic {
                     companyItemPK.getItemCode(),
                     companyItemPK.getCompanyId()
             );
-            boolean saveCompanyItem = companyItemDAO.saveCompanyItem(companyItem);
+            boolean saveCompanyItem = companyItemDAO.save(companyItem);
             if (saveCompanyItem == false) {
                 try {
                     connection.rollback();
@@ -427,7 +427,7 @@ public class BusinessLogic {
 
     public static boolean deleteItem(String itemCode) {
         ItemDAO itemDAO = new ItemDAOImpl();
-        return itemDAO.deleteItem(itemCode);
+        return itemDAO.delete(itemCode);
     }
 
     public static boolean updateItem(ItemTM itemTM) {
@@ -452,7 +452,7 @@ public class BusinessLogic {
 
         );
 
-        return itemDAO.updateItem(item);
+        return itemDAO.update(item);
     }
 
 
