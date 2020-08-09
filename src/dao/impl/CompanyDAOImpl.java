@@ -3,6 +3,7 @@ package dao.impl;
 import dao.CompanyDAO;
 import db.DBConnection;
 import entity.Company;
+import entity.Item;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompanyDAOImpl implements CompanyDAO {
+public class CompanyDAOImpl implements CompanyDAO{
     /*public  List<Object> getAll(){
         ArrayList<Object> companies = new ArrayList<>();
         try {
@@ -112,9 +113,10 @@ public class CompanyDAOImpl implements CompanyDAO {
 
     }*/
 
+
     @Override
-    public List<CompanyDAO> getAll() {
-        ArrayList<Object> companies = new ArrayList<>();
+    public List<Company> getAll() {
+        ArrayList<Company> companies = new ArrayList<>();
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM company");
@@ -138,23 +140,95 @@ public class CompanyDAOImpl implements CompanyDAO {
     }
 
     @Override
-    public CompanyDAO get(String pk) {
-        return null;
+    public Company get(String pk) {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM company WHERE companyId=(?)");
+            preparedStatement.setObject(1,pk);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                return new Company(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getDate(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5)
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return  null;
+        }
+        return  null;
+
+
     }
 
     @Override
-    public boolean save(CompanyDAO object) {
-        return false;
+    public boolean save(Company object) {
+        Company company1 = (Company)object;
+
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO company VALUES (?,?,?,?,?)");
+            preparedStatement.setObject(1, company1.getCompanyId());
+            preparedStatement.setObject(2, company1.getCompanyName());
+            preparedStatement.setObject(3, company1.getEntryDate());
+            preparedStatement.setObject(4, company1.getCompanyPhoneNo());
+            preparedStatement.setObject(5, company1.getCompanyEmail());
+
+            return preparedStatement.executeUpdate()>0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+
+        }
+
+
     }
 
     @Override
     public boolean delete(String pk) {
-        return false;
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM company WHERE companyId=(?)");
+            preparedStatement.setObject(1, pk);
+            return preparedStatement.executeUpdate()>0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+
+        }
+
+
     }
 
     @Override
-    public boolean update(CompanyDAO object) {
-        return false;
+    public boolean update(Company object) {
+
+        Company company1 = (Company)object;
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE company SET companyName=(?),entryDate=(?),companyPhoneNo=(?),companyEmail=(?) WHERE companyId=(?)");
+
+            preparedStatement.setObject(1, company1.getCompanyName());
+            preparedStatement.setObject(2, company1.getEntryDate());
+            preparedStatement.setObject(3, company1.getCompanyPhoneNo());
+            preparedStatement.setObject(4, company1.getCompanyEmail());
+            preparedStatement.setObject(5, company1.getCompanyId());
+            return preparedStatement.executeUpdate()>0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+
+        }
+
+
+
+
+
     }
 
     public  String getLastCompanyId(){
