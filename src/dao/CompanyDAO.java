@@ -1,13 +1,15 @@
 package dao;
 
-import entity.Company;
+public interface CompanyDAO {
 
-import java.util.List;
 
-public interface CompanyDAO extends SuperDAO<CompanyDAO,String>{
+
+    public interface Company extends SuperDAO<Company,String>{
   /*  public List<Company> getAllCompanies();
     public  Company getCompany(String companyId);
     public  boolean saveCompany(Company company);
     public  boolean deleteCompany(String companyId);
     public  boolean updateCompany(Company company);*/
+    }
+
 }

@@ -114,7 +114,27 @@ public class CompanyDAOImpl implements CompanyDAO {
 
     @Override
     public List<CompanyDAO> getAll() {
-        return null;
+        ArrayList<Object> companies = new ArrayList<>();
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM company");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                companies.add(new Company(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getDate(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5)
+                ));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return  null;
+        }
+        return  companies;
+
+
     }
 
     @Override
