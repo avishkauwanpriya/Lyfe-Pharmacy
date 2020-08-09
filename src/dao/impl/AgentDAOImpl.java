@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AgentDAOImpl implements AgentDAO {
 
-    public  List<Object> getAll(){
+    public  List<Object> getAll() {
         ArrayList<Object> agents = new ArrayList<>();
         try {
             Connection connection = DBConnection.getInstance().getConnection();
