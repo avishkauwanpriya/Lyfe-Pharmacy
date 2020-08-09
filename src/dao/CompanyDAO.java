@@ -4,7 +4,7 @@ import entity.Company;
 
 import java.util.List;
 
-public interface CompanyDAO extends SuperDAO{
+public interface CompanyDAO extends SuperDAO<CompanyDAO,String>{
   /*  public List<Company> getAllCompanies();
     public  Company getCompany(String companyId);
     public  boolean saveCompany(Company company);

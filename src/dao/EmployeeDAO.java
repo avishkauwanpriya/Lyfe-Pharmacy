@@ -4,7 +4,7 @@ import entity.Employee;
 
 import java.util.List;
 
-public interface EmployeeDAO extends  SuperDAO{
+public interface EmployeeDAO extends  SuperDAO<Employee,String>{
    /* public List<Employee> getAllEmployees();
     public  Employee getEmployee(String empId);
     public  boolean saveEmployee(Employee employee);

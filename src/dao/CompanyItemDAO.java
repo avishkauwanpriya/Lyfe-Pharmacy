@@ -5,7 +5,7 @@ import entity.CompanyItemPK;
 
 import java.util.List;
 
-public interface CompanyItemDAO extends  SuperDAO{
+public interface CompanyItemDAO extends  SuperDAO<CompanyItem,CompanyItemPK>{
  /*   public List<CompanyItem> getAllCompanyItems();
     public  CompanyItem getCompanyItem(CompanyItemPK companyItemPK);
     public  boolean saveCompanyItem(CompanyItem companyItem);
