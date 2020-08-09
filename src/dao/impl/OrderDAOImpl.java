@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO{
-    public  List<Object> getAll(){
+ /*   public  List<Object> getAll(){
         ArrayList<Object> orders = new ArrayList<>();
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -105,6 +105,33 @@ public class OrderDAOImpl implements OrderDAO{
         return false;
 
 
+    }*/
+
+
+
+    @Override
+    public List<Order> getAll() {
+        return null;
+    }
+
+    @Override
+    public Order get(String pk) {
+        return null;
+    }
+
+    @Override
+    public boolean save(Order object) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String pk) {
+        return false;
+    }
+
+    @Override
+    public boolean update(Order object) {
+        return false;
     }
 
     public  String getLastOrderId(){

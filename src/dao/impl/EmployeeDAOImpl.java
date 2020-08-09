@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-    public  List<Object> getAll(){
+      /* public  List<Object> getAll(){
         ArrayList<Object> employees = new ArrayList<>();
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -126,6 +126,32 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         return false;
 
 
+    }*/
+
+
+    @Override
+    public List<Employee> getAll() {
+        return null;
+    }
+
+    @Override
+    public Employee get(String pk) {
+        return null;
+    }
+
+    @Override
+    public boolean save(Employee object) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String pk) {
+        return false;
+    }
+
+    @Override
+    public boolean update(Employee object) {
+        return false;
     }
 
     public  String getLastEmployeeId(){
@@ -151,4 +177,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
     }
+
+
 }

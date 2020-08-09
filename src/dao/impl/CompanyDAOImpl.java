@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CompanyDAOImpl implements CompanyDAO {
-    public  List<Object> getAll(){
+    /*public  List<Object> getAll(){
         ArrayList<Object> companies = new ArrayList<>();
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -110,6 +110,31 @@ public class CompanyDAOImpl implements CompanyDAO {
 
         }
 
+    }*/
+
+    @Override
+    public List<CompanyDAO> getAll() {
+        return null;
+    }
+
+    @Override
+    public CompanyDAO get(String pk) {
+        return null;
+    }
+
+    @Override
+    public boolean save(CompanyDAO object) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String pk) {
+        return false;
+    }
+
+    @Override
+    public boolean update(CompanyDAO object) {
+        return false;
     }
 
     public  String getLastCompanyId(){

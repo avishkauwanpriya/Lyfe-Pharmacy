@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAOImpl implements ItemDAO {
-    public  List<Object> getAll(){
+ /*   public  List<Object> getAll(){
         ArrayList<Object> items = new ArrayList<>();
         try {
 
@@ -136,6 +136,32 @@ public class ItemDAOImpl implements ItemDAO {
         return false;
 
 
+    }*/
+
+
+    @Override
+    public List<Item> getAll() {
+        return null;
+    }
+
+    @Override
+    public Item get(String pk) {
+        return null;
+    }
+
+    @Override
+    public boolean save(Item object) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String pk) {
+        return false;
+    }
+
+    @Override
+    public boolean update(Item object) {
+        return false;
     }
 
     public  String getLastItemCode(){
