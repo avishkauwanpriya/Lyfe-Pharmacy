@@ -1,5 +1,7 @@
 package dao.impl;
 
+import com.sun.org.apache.regexp.internal.RESyntaxException;
+import dao.CrudUtil;
 import dao.ItemDAO;
 import db.DBConnection;
 import entity.Item;
@@ -144,9 +146,10 @@ public class ItemDAOImpl implements ItemDAO {
         ArrayList<Item> items = new ArrayList<>();
         try {
 
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM item");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM item");
             while (resultSet.next()) {
                 items.add(new Item(resultSet.getString(1),
                         resultSet.getString(2),
@@ -178,10 +181,11 @@ public class ItemDAOImpl implements ItemDAO {
     public Item get(String pk) {
         try {
 
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT *  FROM lyfepharmacy.item WHERE itemCode=(?)");
             preparedStatement.setObject(1, pk);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT *  FROM lyfepharmacy.item WHERE itemCode=(?)",pk);
             if (resultSet.next()) {
                 return new Item(resultSet.getString(1),
                         resultSet.getString(2),
@@ -209,7 +213,7 @@ public class ItemDAOImpl implements ItemDAO {
     public boolean save(Item object) {
         Item item1 = (Item)object;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO lyfepharmacy.item VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             preparedStatement.setObject(1,item1.getItemCode());
             preparedStatement.setObject(2,item1.getDescription());
@@ -223,7 +227,19 @@ public class ItemDAOImpl implements ItemDAO {
             preparedStatement.setObject(9,item1.getQtyOnHand());
             preparedStatement.setObject(9,item1.getUnitPrice());
 
-            return preparedStatement.executeUpdate() > 0;
+            return preparedStatement.executeUpdate() > 0;*/
+          return CrudUtil.execute("INSERT INTO lyfepharmacy.item VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                  item1.getItemCode(),
+                  item1.getDescription(),
+                  item1.getCategory(),
+                  item1.getManufacturer(),
+                  item1.getProductionDate(),
+                  item1.getExpiryDate(),
+                  item1.getBuyingPrice(),
+                  item1.getSellingPrice(),
+                  item1.getMinimumStockLevel(),
+                  item1.getQtyOnHand(),
+                  item1.getUnitPrice());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -235,10 +251,11 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     public boolean delete(String pk) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM lyfepharmacy.item WHERE lyfepharmacy.item.itemCode=(?)");
             preparedStatement.setObject(1, pk);
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+           return CrudUtil.execute("DELETE FROM lyfepharmacy.item WHERE lyfepharmacy.item.itemCode=(?)",pk);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -250,7 +267,7 @@ public class ItemDAOImpl implements ItemDAO {
     public boolean update(Item object) {
         Item item1 = (Item) object;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE item SET description=(?),category=(?),manufacturer=(?),productionDate=(?),expiryDate=(?),buyingPrice=(?),sellingPrice=(?),minimumStockLevel=(?),qtyOnHand=(?),unitPrice=(?) WHERE itemCode=(?)");
             preparedStatement.setObject(11,item1.getItemCode());
             preparedStatement.setObject(1,item1.getDescription());
@@ -264,7 +281,29 @@ public class ItemDAOImpl implements ItemDAO {
             preparedStatement.setObject(9,item1.getQtyOnHand());
             preparedStatement.setObject(10,item1.getUnitPrice());
 
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+
+         return CrudUtil.execute("UPDATE item SET description=(?),category=(?),manufacturer=(?),productionDate=(?),expiryDate=(?),buyingPrice=(?),sellingPrice=(?),minimumStockLevel=(?),qtyOnHand=(?),unitPrice=(?) WHERE itemCode=(?)",
+                  item1.getDescription(),
+                  item1.getCategory(),
+                  item1.getManufacturer(),
+                  item1.getProductionDate(),
+                  item1.getExpiryDate(),
+                  item1.getBuyingPrice(),
+                  item1.getSellingPrice(),
+                  item1.getMinimumStockLevel(),
+                  item1.getQtyOnHand(),
+                  item1.getUnitPrice(),
+                  item1.getItemCode()
+
+
+
+
+
+
+
+
+                  );
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -275,9 +314,10 @@ public class ItemDAOImpl implements ItemDAO {
 
     public  String getLastItemCode(){
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+         /*   Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM lyfepharmacy.item ORDER BY itemCode DESC LIMIT 1");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet =  CrudUtil.execute("SELECT * FROM lyfepharmacy.item ORDER BY itemCode DESC LIMIT 1");
             if(resultSet.next()){
                 return resultSet.getString(1);
 
