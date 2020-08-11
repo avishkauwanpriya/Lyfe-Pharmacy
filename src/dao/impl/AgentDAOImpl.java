@@ -149,7 +149,7 @@ public class AgentDAOImpl implements AgentDAO {
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM agent WHERE agentId=(?)");
         preparedStatement.setObject(1,pk);
         ResultSet resultSet = preparedStatement.executeQuery();*/
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM agent WHERE agentId=(?)");
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM agent WHERE agentId=(?)",pk);
         if(resultSet.next()){
             return  new Agent(resultSet.getString(1),
                     resultSet.getString(2),
