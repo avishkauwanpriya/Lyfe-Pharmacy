@@ -218,13 +218,13 @@ public class AgentDAOImpl implements AgentDAO {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE agent SET companyId=(?),entryDate=(?),agentPhoneNo=(?),agentEmail=(?),agentName=(?) WHERE agentId=(?)");
             preparedStatement.setObject(6, agent1.getAgentId());
             preparedStatement.setObject(1, agent1.getCompanyId());
-            preparedStatement.setObject(2, agent1.getEntryDate());
+            preparedStatement.setObject(2, agent1.getCompanyId());
             preparedStatement.setObject(3, agent1.getPhoneNo());
             preparedStatement.setObject(4, agent1.getEmail());
             preparedStatement.setObject(5, agent1.getName());
             return preparedStatement.executeUpdate()>0;*/
 
-            return  CrudUtil.execute("UPDATE agent SET companyId=(?),entryDate=(?),agentPhoneNo=(?),agentEmail=(?),agentName=(?) WHERE agentId=(?)");
+            return  CrudUtil.execute("UPDATE agent SET companyId=(?),entryDate=(?),agentPhoneNo=(?),agentEmail=(?),agentName=(?) WHERE agentId=(?)",agent1.getCompanyId(),agent1.getEntryDate(),agent1.getPhoneNo(),agent1.getEmail(),agent1.getName(),agent1.getAgentId());
 
         } catch (SQLException e) {
             e.printStackTrace();
