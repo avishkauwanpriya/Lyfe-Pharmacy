@@ -1,6 +1,7 @@
 package dao.impl;
 
 import dao.AgentDAO;
+import dao.CrudUtil;
 import db.DBConnection;
 import entity.Agent;
 
@@ -120,9 +121,10 @@ public class AgentDAOImpl implements AgentDAO {
 
         ArrayList<Agent> agents = new ArrayList<>();
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM agent");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM agent");
             while(resultSet.next()){
                 agents.add(new Agent(resultSet.getString(1),
                         resultSet.getString(2),
@@ -143,10 +145,11 @@ public class AgentDAOImpl implements AgentDAO {
 
     @Override
     public Agent get(String pk){  try {
-        Connection connection = DBConnection.getInstance().getConnection();
+       /* Connection connection = DBConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM agent WHERE agentId=(?)");
         preparedStatement.setObject(1,pk);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        ResultSet resultSet = preparedStatement.executeQuery();*/
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM agent WHERE agentId=(?)");
         if(resultSet.next()){
             return  new Agent(resultSet.getString(1),
                     resultSet.getString(2),
@@ -169,15 +172,16 @@ public class AgentDAOImpl implements AgentDAO {
     public boolean save(Agent object) {
         Agent agent1 = (Agent)object;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO agent VALUES (?,?,?,?,?,?)");
-            preparedStatement.setObject(1, agent1.getAgentId());
+            preparedStatement.setObject(1,agent1.getAgentId());
             preparedStatement.setObject(2, agent1.getCompanyId());
             preparedStatement.setObject(3, agent1.getEntryDate());
             preparedStatement.setObject(4, agent1.getPhoneNo());
             preparedStatement.setObject(5, agent1.getEmail());
-            preparedStatement.setObject(6, agent1.getName());
-            return preparedStatement.executeUpdate()>0;
+            preparedStatement.setObject(6, agent1.getName());*/
+
+            return CrudUtil.execute("INSERT INTO agent VALUES (?,?,?,?,?,?)", agent1.getAgentId(), agent1.getCompanyId(),agent1.getEntryDate(), agent1.getPhoneNo(),agent1.getEmail(),agent1.getName());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -191,10 +195,11 @@ public class AgentDAOImpl implements AgentDAO {
     @Override
     public boolean delete(String pk) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+     /*       Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM agent WHERE agentId=(?)");
             preparedStatement.setObject(1, pk);
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+            return CrudUtil.execute("DELETE FROM agent WHERE agentId=(?)",pk);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -209,7 +214,7 @@ public class AgentDAOImpl implements AgentDAO {
     public boolean update(Agent object){
         Agent agent1 = (Agent)object;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE agent SET companyId=(?),entryDate=(?),agentPhoneNo=(?),agentEmail=(?),agentName=(?) WHERE agentId=(?)");
             preparedStatement.setObject(6, agent1.getAgentId());
             preparedStatement.setObject(1, agent1.getCompanyId());
@@ -217,7 +222,9 @@ public class AgentDAOImpl implements AgentDAO {
             preparedStatement.setObject(3, agent1.getPhoneNo());
             preparedStatement.setObject(4, agent1.getEmail());
             preparedStatement.setObject(5, agent1.getName());
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+
+            return  CrudUtil.execute("UPDATE agent SET companyId=(?),entryDate=(?),agentPhoneNo=(?),agentEmail=(?),agentName=(?) WHERE agentId=(?)");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -230,9 +237,10 @@ public class AgentDAOImpl implements AgentDAO {
 
     public  String getLastAgentId(){
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM agent ORDER BY agentId DESC LIMIT 1");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM agent ORDER BY agentId DESC LIMIT 1");
             if(resultSet.next()){
                 return resultSet.getString(1);
 
