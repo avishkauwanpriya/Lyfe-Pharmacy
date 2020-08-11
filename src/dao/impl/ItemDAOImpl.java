@@ -142,9 +142,9 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     @Override
-    public List<Item> getAll() {
+    public List<Item> getAll() throws SQLException {
         ArrayList<Item> items = new ArrayList<>();
-        try {
+
 
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM item");
@@ -168,9 +168,7 @@ public class ItemDAOImpl implements ItemDAO {
 
 
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
         return items;
 
@@ -178,8 +176,8 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public Item get(String pk) {
-        try {
+    public Item get(String pk) throws SQLException {
+
 
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT *  FROM lyfepharmacy.item WHERE itemCode=(?)");
@@ -202,17 +200,15 @@ public class ItemDAOImpl implements ItemDAO {
             }
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         return null;
 
     }
 
     @Override
-    public boolean save(Item object) {
+    public boolean save(Item object) throws SQLException {
         Item item1 = (Item)object;
-        try {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO lyfepharmacy.item VALUES (?,?,?,?,?,?,?,?,?,?,?)");
             preparedStatement.setObject(1,item1.getItemCode());
@@ -240,33 +236,27 @@ public class ItemDAOImpl implements ItemDAO {
                   item1.getMinimumStockLevel(),
                   item1.getQtyOnHand(),
                   item1.getUnitPrice());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+
 
 
     }
 
     @Override
-    public boolean delete(String pk) {
-        try {
+    public boolean delete(String pk) throws SQLException {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM lyfepharmacy.item WHERE lyfepharmacy.item.itemCode=(?)");
             preparedStatement.setObject(1, pk);
             return preparedStatement.executeUpdate()>0;*/
            return CrudUtil.execute("DELETE FROM lyfepharmacy.item WHERE lyfepharmacy.item.itemCode=(?)",pk);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+
 
     }
 
     @Override
-    public boolean update(Item object) {
+    public boolean update(Item object) throws SQLException {
         Item item1 = (Item) object;
-        try {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE item SET description=(?),category=(?),manufacturer=(?),productionDate=(?),expiryDate=(?),buyingPrice=(?),sellingPrice=(?),minimumStockLevel=(?),qtyOnHand=(?),unitPrice=(?) WHERE itemCode=(?)");
             preparedStatement.setObject(11,item1.getItemCode());
@@ -296,24 +286,14 @@ public class ItemDAOImpl implements ItemDAO {
                   item1.getUnitPrice(),
                   item1.getItemCode()
 
+         );
 
-
-
-
-
-
-
-                  );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
 
 
     }
 
-    public  String getLastItemCode(){
-        try {
+    public  String getLastItemCode() throws SQLException {
+
          /*   Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM lyfepharmacy.item ORDER BY itemCode DESC LIMIT 1");
             ResultSet resultSet = preparedStatement.executeQuery();*/
@@ -327,12 +307,7 @@ public class ItemDAOImpl implements ItemDAO {
 
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
 
-
-        }
 
 
     }
