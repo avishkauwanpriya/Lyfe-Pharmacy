@@ -1,5 +1,6 @@
 package dao.impl;
 
+import dao.CrudUtil;
 import dao.OrderDAO;
 import dao.OrderDetailDAO;
 import db.DBConnection;
@@ -113,9 +114,10 @@ public class OrderDAOImpl implements OrderDAO{
     public List<Order> getAll(){
         ArrayList<Order> orders = new ArrayList<>();
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `order`");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM `order`");
             while(resultSet.next()){
                 orders.add(new Order(resultSet.getString(1),
                         resultSet.getString(2),
@@ -135,10 +137,11 @@ public class OrderDAOImpl implements OrderDAO{
     @Override
     public Order get(String pk) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `order` WHERE orderId=(?)");
             preparedStatement.setObject(1,pk);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM `order` WHERE orderId=(?)",pk);
             if(resultSet.next()){
                 return new Order(
                         resultSet.getString(1),
@@ -160,7 +163,7 @@ public class OrderDAOImpl implements OrderDAO{
     public boolean save(Order object) {
         Order order1 = (Order)object;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+            /*Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `order` VALUES (?,?,?)");
             preparedStatement.setObject(1, order1.getOrderId());
             preparedStatement.setObject(2, order1.getEmpId());
@@ -168,7 +171,8 @@ public class OrderDAOImpl implements OrderDAO{
 
 
 
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+            return CrudUtil.execute("INSERT INTO `order` VALUES (?,?,?)",order1.getOrderId(),order1.getEmpId(),order1.getOrderDate());
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -182,10 +186,11 @@ public class OrderDAOImpl implements OrderDAO{
     @Override
     public boolean delete(String pk) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `order` WHERE orderId=(?)");
             preparedStatement.setObject(1, pk);
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+          return CrudUtil.execute("DELETE FROM `order` WHERE orderId=(?)",pk);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -200,14 +205,15 @@ public class OrderDAOImpl implements OrderDAO{
     public boolean update(Order object) {
         Order order1 = (Order)object;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+         /*   Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `order` SET empId=(?),orderDate=(?) WHERE orderId=(?)");
             preparedStatement.setObject(1, order1.getEmpId());
             preparedStatement.setObject(2, order1.getOrderDate());
-            preparedStatement.setObject(3, order1.getOrderId());
+            preparedStatement.setObject(3, order1.getOrderId());*/
+         return CrudUtil.execute("UPDATE `order` SET empId=(?),orderDate=(?) WHERE orderId=(?)", order1.getEmpId(),order1.getOrderDate(),order1.getOrderId());
 
 
-            return preparedStatement.executeUpdate()>0;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -218,9 +224,10 @@ public class OrderDAOImpl implements OrderDAO{
 
     public  String getLastOrderId(){
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `order` ORDER BY orderId DESC LIMIT 1");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM `order` ORDER BY orderId DESC LIMIT 1");
             if(resultSet.next()){
                 return resultSet.getString(1);
 
