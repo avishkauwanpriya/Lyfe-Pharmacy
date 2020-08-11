@@ -1,5 +1,6 @@
 package dao.impl;
 
+import dao.CrudUtil;
 import dao.EmployeeDAO;
 import db.DBConnection;
 import entity.Employee;
@@ -133,9 +134,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public List<Employee> getAll() {
         ArrayList<Employee> employees = new ArrayList<>();
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM employee");
             while(resultSet.next()){
                 employees.add(new Employee(resultSet.getString(1),
                         resultSet.getString(2),
@@ -161,10 +163,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public Employee get(String pk) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE empId=(?)");
             preparedStatement.setObject(1,pk);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM employee WHERE empId=(?)",pk);
             if(resultSet.next()){
                 return new Employee(resultSet.getString(1),
                         resultSet.getString(2),
@@ -191,10 +194,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public boolean save(Employee object) {
         Employee employee1 = (Employee)object;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO employee VALUES (?,?,?,?,?,?,?,?,?)");
             preparedStatement.setObject(1, employee1.getEmpId());
-            preparedStatement.setObject(2, employee1.getEmpName());
+            preparedStatement.setObject(2, employee1.getEmpId());
             preparedStatement.setObject(3, employee1.getEmpAddress());
             preparedStatement.setObject(4, employee1.getEmail());
             preparedStatement.setObject(5, employee1.getContactNo());
@@ -204,7 +207,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             preparedStatement.setObject(4, employee1.getGender());
 
 
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+          return CrudUtil.execute("INSERT INTO employee VALUES (?,?,?,?,?,?,?,?,?)",employee1.getEmpId(),employee1.getEmpId(), employee1.getEmpAddress(),employee1.getEmail(),employee1.getContactNo(), employee1.getDateOfBirth(),employee1.getJoinedDate(),employee1.getSalary(),employee1.getGender());
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -218,10 +223,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public boolean delete(String pk) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+           /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM employee WHERE empId=(?)");
             preparedStatement.setObject(1, pk);
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+
+           return CrudUtil.execute("DELETE FROM employee WHERE empId=(?)",pk);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -236,7 +243,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public boolean update(Employee object) {
         Employee employee1 = (Employee)object;
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+            /*Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE employee SET empName=(?),empAddress=(?),email=(?),contactNo=(?),dateOfBirth=(?),joinedDate=(?),salary=(?),gender=(?) WHERE empId=(?)");
             preparedStatement.setObject(9, employee1.getEmpId());
             preparedStatement.setObject(1, employee1.getEmpName());
@@ -248,7 +255,17 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             preparedStatement.setObject(7, employee1.getSalary());
             preparedStatement.setObject(8, employee1.getGender());
 
-            return preparedStatement.executeUpdate()>0;
+            return preparedStatement.executeUpdate()>0;*/
+           CrudUtil.execute("UPDATE employee SET empName=(?),empAddress=(?),email=(?),contactNo=(?),dateOfBirth=(?),joinedDate=(?),salary=(?),gender=(?) WHERE empId=(?)",
+                    employee1.getEmpName(),
+                    employee1.getEmpAddress(),
+                    employee1.getEmail(),
+                    employee1.getContactNo(),
+                    employee1.getDateOfBirth(),
+                    employee1.getJoinedDate(),
+                    employee1.getSalary(),
+                    employee1.getGender(),
+                    employee1.getEmpId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -260,9 +277,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     public  String getLastEmployeeId(){
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+          /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee ORDER BY empId DESC LIMIT 1");
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();*/
+
+          ResultSet resultSet = CrudUtil.execute("SELECT * FROM employee ORDER BY empId DESC LIMIT 1");
             if(resultSet.next()){
                 return resultSet.getString(1);
 
