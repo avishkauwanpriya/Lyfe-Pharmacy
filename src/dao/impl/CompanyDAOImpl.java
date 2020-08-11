@@ -116,9 +116,9 @@ public class CompanyDAOImpl implements CompanyDAO{
 
 
     @Override
-    public List<Company> getAll() {
+    public List<Company> getAll() throws SQLException {
         ArrayList<Company> companies = new ArrayList<>();
-        try {
+
             ResultSet resultSet = CrudUtil.execute("SELECT * FROM company");
             while(resultSet.next()){
                 companies.add(new Company(resultSet.getString(1),
@@ -129,18 +129,15 @@ public class CompanyDAOImpl implements CompanyDAO{
                 ));
 
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  companies;
 
 
     }
 
     @Override
-    public Company get(String pk) {
-        try {
+    public Company get(String pk) throws SQLException {
+
             /*Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM company WHERE companyId=(?)");
             preparedStatement.setObject(1,pk);
@@ -155,10 +152,8 @@ public class CompanyDAOImpl implements CompanyDAO{
                 );
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
+
         return  null;
 
 
@@ -166,10 +161,10 @@ public class CompanyDAOImpl implements CompanyDAO{
     }
 
     @Override
-    public boolean save(Company object) {
+    public boolean save(Company object) throws SQLException {
         Company company1 = (Company)object;
 
-        try {
+
         /*    Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO company VALUES (?,?,?,?,?)");
             preparedStatement.setObject(1, company1.getCompanyId());
@@ -182,38 +177,29 @@ public class CompanyDAOImpl implements CompanyDAO{
             return CrudUtil.execute("INSERT INTO company VALUES (?,?,?,?,?)", company1.getCompanyId(), company1.getCompanyName(), company1.getEntryDate(), company1.getCompanyPhoneNo(), company1.getCompanyEmail());
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-
-        }
 
 
     }
 
     @Override
-    public boolean delete(String pk) {
-        try {
+    public boolean delete(String pk) throws SQLException {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM company WHERE companyId=(?)");
             preparedStatement.setObject(1, pk);
             return preparedStatement.executeUpdate()>0;*/
            return CrudUtil.execute("DELETE FROM company WHERE companyId=(?)",pk);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-        }
 
 
     }
 
     @Override
-    public boolean update(Company object) {
+    public boolean update(Company object) throws SQLException {
 
         Company company1 = (Company)object;
-        try {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE company SET companyName=(?),entryDate=(?),companyPhoneNo=(?),companyEmail=(?) WHERE companyId=(?)");
 
@@ -226,11 +212,7 @@ public class CompanyDAOImpl implements CompanyDAO{
 
            return CrudUtil.execute("UPDATE company SET companyName=(?),entryDate=(?),companyPhoneNo=(?),companyEmail=(?) WHERE companyId=(?)",company1.getCompanyName(), company1.getEntryDate(),company1.getCompanyPhoneNo(),company1.getCompanyEmail(),company1.getCompanyId());
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-        }
 
 
 
@@ -238,8 +220,8 @@ public class CompanyDAOImpl implements CompanyDAO{
 
     }
 
-    public  String getLastCompanyId(){
-        try {
+    public  String getLastCompanyId() throws SQLException {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM company ORDER BY companyId DESC LIMIT 1");
             ResultSet resultSet = preparedStatement.executeQuery();*/
@@ -253,12 +235,7 @@ public class CompanyDAOImpl implements CompanyDAO{
 
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
 
-
-        }
 
 
     }
