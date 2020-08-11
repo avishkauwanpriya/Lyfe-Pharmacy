@@ -283,7 +283,7 @@ public class BusinessLogic {
 
                 Object item = itemDAO.get(orderDetail.getItemCode());
                 ((Item)item).setQtyOnHand(((Item)item).getQtyOnHand().subtract(orderDetail.getQty()));
-                boolean updatedQty = itemDAO.update(item);
+                boolean updatedQty = itemDAO.update((Item) item);
                 if (updatedQty==false) {
                     connection.rollback();
                     return false;
@@ -365,7 +365,7 @@ public class BusinessLogic {
         try {
             connection.setAutoCommit(false);
             Object item = itemDAO.get(companyItemPK.getItemCode());
-            boolean saveItem = itemDAO.save(item);
+            boolean saveItem = itemDAO.save((Item) item);
             if (saveItem==false) {
                 try {
                     connection.rollback();
