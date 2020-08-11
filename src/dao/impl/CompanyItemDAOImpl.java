@@ -93,9 +93,9 @@ public class CompanyItemDAOImpl implements CompanyItemDAO {
 
   }*/
     @Override
-    public List<CompanyItem> getAll() {
+    public List<CompanyItem> getAll() throws SQLException {
         ArrayList<CompanyItem> companyItems = new ArrayList<>();
-        try {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM companyitem");
             ResultSet resultSet = preparedStatement.executeQuery();*/
@@ -106,10 +106,7 @@ public class CompanyItemDAOImpl implements CompanyItemDAO {
                 ));
 
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  companyItems;
 
 
@@ -117,9 +114,9 @@ public class CompanyItemDAOImpl implements CompanyItemDAO {
     }
 
     @Override
-    public CompanyItem get(CompanyItemPK pk) {
+    public CompanyItem get(CompanyItemPK pk) throws SQLException {
         CompanyItemPK companyItemPK1 = (CompanyItemPK) pk;
-        try {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM companyitem WHERE companyId=(?) AND ItemCode=(?)");
             preparedStatement.setObject(1,companyItemPK1.getCompanyId());
@@ -131,19 +128,16 @@ public class CompanyItemDAOImpl implements CompanyItemDAO {
                         resultSet.getString(2)
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  null;
 
 
     }
 
     @Override
-    public boolean save(CompanyItem object) {
+    public boolean save(CompanyItem object) throws SQLException {
         CompanyItem companyItem1 = (CompanyItem) object;
-        try {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO companyitem VALUES (?,?)");
             preparedStatement.setObject(1, companyItem1.getCompanyItemPK().getItemCode());
@@ -152,18 +146,14 @@ public class CompanyItemDAOImpl implements CompanyItemDAO {
             return preparedStatement.executeUpdate()>0;*/
           return CrudUtil.execute("INSERT INTO companyitem VALUES (?,?)",companyItem1.getCompanyItemPK().getItemCode(),companyItem1.getCompanyItemPK().getCompanyId());
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-        }
 
     }
 
     @Override
-    public boolean delete(CompanyItemPK pk) {
+    public boolean delete(CompanyItemPK pk) throws SQLException {
         CompanyItemPK companyItemPK1 = (CompanyItemPK) pk;
-        try {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM companyitem WHERE companyId=(?) AND ItemCode=(?)");
             preparedStatement.setObject(1, companyItemPK1.getItemCode());
@@ -171,11 +161,7 @@ public class CompanyItemDAOImpl implements CompanyItemDAO {
             return preparedStatement.executeUpdate()>0;*/
           return CrudUtil.execute("DELETE FROM companyitem WHERE companyId=(?) AND ItemCode=(?)",companyItemPK1);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-        }
 
 
     }
