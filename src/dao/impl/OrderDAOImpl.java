@@ -111,9 +111,9 @@ public class OrderDAOImpl implements OrderDAO{
 
 
     @Override
-    public List<Order> getAll(){
+    public List<Order> getAll() throws SQLException {
         ArrayList<Order> orders = new ArrayList<>();
-        try {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `order`");
             ResultSet resultSet = preparedStatement.executeQuery();*/
@@ -126,17 +126,14 @@ public class OrderDAOImpl implements OrderDAO{
                 ));
 
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  orders;
 
     }
 
     @Override
-    public Order get(String pk) {
-        try {
+    public Order get(String pk) throws SQLException {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `order` WHERE orderId=(?)");
             preparedStatement.setObject(1,pk);
@@ -150,19 +147,16 @@ public class OrderDAOImpl implements OrderDAO{
 
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  null;
 
 
     }
 
     @Override
-    public boolean save(Order object) {
+    public boolean save(Order object) throws SQLException {
         Order order1 = (Order)object;
-        try {
+
             /*Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `order` VALUES (?,?,?)");
             preparedStatement.setObject(1, order1.getOrderId());
@@ -174,37 +168,28 @@ public class OrderDAOImpl implements OrderDAO{
             return preparedStatement.executeUpdate()>0;*/
             return CrudUtil.execute("INSERT INTO `order` VALUES (?,?,?)",order1.getOrderId(),order1.getEmpId(),order1.getOrderDate());
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-
-        }
 
 
     }
 
     @Override
-    public boolean delete(String pk) {
-        try {
+    public boolean delete(String pk) throws SQLException {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `order` WHERE orderId=(?)");
             preparedStatement.setObject(1, pk);
             return preparedStatement.executeUpdate()>0;*/
           return CrudUtil.execute("DELETE FROM `order` WHERE orderId=(?)",pk);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-        }
 
 
     }
 
     @Override
-    public boolean update(Order object) {
+    public boolean update(Order object) throws SQLException {
         Order order1 = (Order)object;
-        try {
+
          /*   Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `order` SET empId=(?),orderDate=(?) WHERE orderId=(?)");
             preparedStatement.setObject(1, order1.getEmpId());
@@ -214,16 +199,13 @@ public class OrderDAOImpl implements OrderDAO{
 
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+
 
 
     }
 
-    public  String getLastOrderId(){
-        try {
+    public  String getLastOrderId() throws SQLException {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `order` ORDER BY orderId DESC LIMIT 1");
             ResultSet resultSet = preparedStatement.executeQuery();*/
@@ -237,12 +219,7 @@ public class OrderDAOImpl implements OrderDAO{
 
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
 
-
-        }
 
 
     }
