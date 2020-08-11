@@ -120,9 +120,9 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
    }
 */
     @Override
-    public List<OrderDetail> getAll() {
+    public List<OrderDetail> getAll() throws SQLException {
         ArrayList<OrderDetail> ordersDetails = new ArrayList<>();
-        try {
+
         /*    Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM orderdetail");
             ResultSet resultSet = preparedStatement.executeQuery();*/
@@ -136,19 +136,16 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
                 ));
 
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  ordersDetails;
 
 
     }
 
     @Override
-    public OrderDetail get(OrderDetailPK pk) {
+    public OrderDetail get(OrderDetailPK pk) throws SQLException {
         OrderDetailPK orderDetailPK1 = (OrderDetailPK) pk;
-        try {
+
             /*Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM orderdetail WHERE orderId=(?) AND itemCode=(?)");
             preparedStatement.setObject(1,orderDetailPK1.getOrderId());
@@ -164,19 +161,16 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  null;
 
 
     }
 
     @Override
-    public boolean save(OrderDetail object) {
+    public boolean save(OrderDetail object) throws SQLException {
         OrderDetail orderDetail1 = (OrderDetail) object;
-        try {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO orderdetail VALUES (?,?,?,?)");
             preparedStatement.setObject(1, orderDetail1.getOrderDetailPK().getOrderId());
@@ -192,18 +186,13 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
                   orderDetail1.getUnitPrice()
                   );
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-
-        }
     }
 
     @Override
-    public boolean delete(OrderDetailPK pk) {
+    public boolean delete(OrderDetailPK pk) throws SQLException {
         OrderDetailPK orderDetailPK1 = (OrderDetailPK)pk;
-        try {
+
          /*   Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM orderdetail WHERE orderId=(?) AND itemCode=(?)");
             preparedStatement.setObject(1, orderDetailPK1.getOrderId());
@@ -215,19 +204,15 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
                  orderDetailPK1.getItemCode()
                  );
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-        }
 
 
     }
 
     @Override
-    public boolean update(OrderDetail object) {
+    public boolean update(OrderDetail object) throws SQLException {
         OrderDetail orderDetail1 = (OrderDetail)object;
-        try {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE orderdetail SET qty=(?),unitPrice=(?) WHERE orderId=(?) AND itemCode=(?)");
             preparedStatement.setObject(1, orderDetail1.getQty());
@@ -246,10 +231,8 @@ public class OrderDetailDAOImpl implements OrderDetailDAO {
 
 
                   );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
+
+
 
     }
 
