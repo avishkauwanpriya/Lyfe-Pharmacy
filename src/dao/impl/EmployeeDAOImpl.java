@@ -131,9 +131,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
     @Override
-    public List<Employee> getAll() {
+    public List<Employee> getAll() throws SQLException {
         ArrayList<Employee> employees = new ArrayList<>();
-        try {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee");
             ResultSet resultSet = preparedStatement.executeQuery();*/
@@ -151,18 +151,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                 ));
 
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  employees;
 
 
     }
 
     @Override
-    public Employee get(String pk) {
-        try {
+    public Employee get(String pk) throws SQLException {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee WHERE empId=(?)");
             preparedStatement.setObject(1,pk);
@@ -180,10 +177,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                         resultSet.getString(8)
                 );
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return  null;
-        }
+
         return  null;
 
 
@@ -191,9 +185,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public boolean save(Employee object) {
+    public boolean save(Employee object) throws SQLException {
         Employee employee1 = (Employee)object;
-        try {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO employee VALUES (?,?,?,?,?,?,?,?,?)");
             preparedStatement.setObject(1, employee1.getEmpId());
@@ -211,18 +205,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
           return CrudUtil.execute("INSERT INTO employee VALUES (?,?,?,?,?,?,?,?,?)",employee1.getEmpId(),employee1.getEmpId(), employee1.getEmpAddress(),employee1.getEmail(),employee1.getContactNo(), employee1.getDateOfBirth(),employee1.getJoinedDate(),employee1.getSalary(),employee1.getGender());
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-        }
 
 
     }
 
     @Override
-    public boolean delete(String pk) {
-        try {
+    public boolean delete(String pk) throws SQLException {
+
            /* Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM employee WHERE empId=(?)");
             preparedStatement.setObject(1, pk);
@@ -230,19 +220,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
            return CrudUtil.execute("DELETE FROM employee WHERE empId=(?)",pk);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
 
-        }
 
 
     }
 
     @Override
-    public boolean update(Employee object) {
+    public boolean update(Employee object) throws SQLException {
         Employee employee1 = (Employee)object;
-        try {
+
             /*Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE employee SET empName=(?),empAddress=(?),email=(?),contactNo=(?),dateOfBirth=(?),joinedDate=(?),salary=(?),gender=(?) WHERE empId=(?)");
             preparedStatement.setObject(9, employee1.getEmpId());
@@ -266,17 +252,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
                     employee1.getSalary(),
                     employee1.getGender(),
                     employee1.getEmpId());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         return false;
 
 
 
     }
 
-    public  String getLastEmployeeId(){
-        try {
+    public  String getLastEmployeeId() throws SQLException {
+
           /*  Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM employee ORDER BY empId DESC LIMIT 1");
             ResultSet resultSet = preparedStatement.executeQuery();*/
@@ -291,12 +275,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
 
-
-        }
 
 
     }
